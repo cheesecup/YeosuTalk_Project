@@ -16,17 +16,13 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
     private String accountId;
 
-    @Column(nullable = false, length = 100)
     private String pwd;
 
-    @Column(nullable = false, length = 100)
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 100)
     private Citizen citizen;
 
     private String nickname;

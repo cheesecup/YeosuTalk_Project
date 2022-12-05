@@ -45,4 +45,9 @@ public class MemberController {
         return memberService.login(accountId, pwd);
     }
 
+    /* 아이디 찾기 컨트롤러 */
+
+    /* 비밀번호 찾기 컨트롤러 */
+
+
 }
