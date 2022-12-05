@@ -50,6 +50,7 @@ class MemberServiceTest {
         memberFormDto.setPwd("1234");
         memberFormDto.setName("회원A");
         memberFormDto.setCitizen(Citizen.CITIZEN);
+
         Member member = Member.toEntity(memberFormDto);
         memberRepository.save(member);
 
