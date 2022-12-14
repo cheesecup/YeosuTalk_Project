@@ -1,9 +1,7 @@
-# member dummy data by http://www.mockaroo.com
 insert into member (id, account_id, pwd, name, citizen) values (null, 'kiddons0@google.co.uk', 'Edgepulse', 'lmarciek0', 'citizen');
 insert into member (id, account_id, pwd, name, citizen) values (null, 'ameffin1@vkontakte.ru', 'Devbug', 'mcamoletto1', 'citizen');
 insert into member (id, account_id, pwd, name, citizen) values (null, 'gmeekins2@godaddy.com', 'Flashset', 'acasone2', 'citizen');
 
-# tour_board dummy data by http://www.mockaroo.com
 insert into tour_board (id, content, title, writer) values (null, 'Revision of Nonautologous Tissue Substitute in Abdominal Wall, Percutaneous Approach', 'Carts of Darkness', 'mlerhinan0');
 insert into tour_board (id, content, title, writer) values (null, 'Bypass Left Greater Saphenous Vein to Lower Vein with Synthetic Substitute, Open Approach', 'A Pistol For Ringo', 'pdoberer1');
 insert into tour_board (id, content, title, writer) values (null, 'Release Right Renal Artery, Percutaneous Endoscopic Approach', 'Last Exit to Brooklyn', 'mminchi2');
