@@ -1,13 +1,11 @@
 package com.chiz.yeosutalk.controller;
 
 import com.chiz.yeosutalk.domain.TourBoard;
+import com.chiz.yeosutalk.dto.TourBoardDto;
 import com.chiz.yeosutalk.dto.TourBoardFormDto;
 import com.chiz.yeosutalk.service.TourBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,9 +30,30 @@ public class TourBoardController {
 
     /* 관광 게시판 게시글 목록 조회 컨트롤러 */
     @GetMapping("/list")
-    public List<TourBoard> listTourBoard() {
+    public List<TourBoard> tourBoardList() {
         List<TourBoard> tourBoardList = tourBoardService.tourBoardList();
 
         return tourBoardList;
+    }
+
+    /* 관광 게시판 게시글 상세내용 조회 컨트롤러 */
+    @GetMapping("/info/{id}")
+    public TourBoardDto tourPostInfo(@PathVariable("id") Long id) {
+        return tourBoardService.postInfo(id);
+    }
+
+    /* 관광 게시판 게시글 수정 컨트롤러*/
+    @PostMapping("/update")
+    public Long updateTourPost(Long id, TourBoardFormDto tourBoardFormDto) {
+        Long updatePostId = tourBoardService.updateTourPost(id, tourBoardFormDto);
+
+        return updatePostId;
+    }
+
+    /* 관광 게시판 게시글 삭제 컨트롤러 */
+    @DeleteMapping("/delete")
+    public boolean deleteTourPost(Long id) {
+        boolean result = tourBoardService.deleteTourPost(id);
+        return result;
     }
 }

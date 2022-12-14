@@ -55,6 +55,11 @@ public class TourBoard {
         this.writer = writer;
     }
 
+    public TourBoard(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     public static TourBoard toEntity(TourBoardFormDto tourBoardFormDto) {
         return new TourBoard(tourBoardFormDto.getTitle(), tourBoardFormDto.getContent(), tourBoardFormDto.getWriter());
     }
