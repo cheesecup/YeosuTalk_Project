@@ -2,7 +2,6 @@ package com.chiz.yeosutalk.repository;
 
 import com.chiz.yeosutalk.domain.Citizen;
 import com.chiz.yeosutalk.domain.Member;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +17,11 @@ class MemberRepositoryTest {
     @Autowired
     MemberRepository memberRepository;
 
-    /* 테스트 메서드 실행전 저장소 데이터 삭제 */
-    @BeforeEach
-    void before() {
-        memberRepository.deleteAll();
-    }
+//    /* 테스트 메서드 실행전 저장소 데이터 삭제 */
+//    @BeforeEach
+//    void before() {
+//        memberRepository.deleteAll();
+//    }
 
     @Test
     @DisplayName("DB에 회원 정보 저장 테스트")
@@ -32,7 +31,7 @@ class MemberRepositoryTest {
         member.setAccountId("memberA");
         member.setPwd("1234");
         member.setName("회원A");
-        member.setCitizen(Citizen.CITIZEN);
+        member.setCitizen(Citizen.yes);
 
         //When
         Member savedMember = memberRepository.save(member);
@@ -51,14 +50,14 @@ class MemberRepositoryTest {
         member1.setAccountId("member1");
         member1.setPwd("1234");
         member1.setName("회원1");
-        member1.setCitizen(Citizen.CITIZEN);
+        member1.setCitizen(Citizen.yes);
         memberRepository.save(member1);
 
         Member member2 = new Member();
         member2.setAccountId("member2");
         member2.setPwd("1234");
         member2.setName("회원2");
-        member2.setCitizen(Citizen.NON_CITIZEN);
+        member2.setCitizen(Citizen.non);
         memberRepository.save(member2);
 
         //When
@@ -77,7 +76,7 @@ class MemberRepositoryTest {
         member1.setPwd("1234");
         member1.setName("회원1");
         member1.setNickname("닉네임1");
-        member1.setCitizen(Citizen.CITIZEN);
+        member1.setCitizen(Citizen.yes);
         memberRepository.save(member1);
 
         Member member2 = new Member();
@@ -85,7 +84,7 @@ class MemberRepositoryTest {
         member2.setPwd("1234");
         member2.setName("회원2");
         member1.setNickname("닉네임1");
-        member2.setCitizen(Citizen.NON_CITIZEN);
+        member2.setCitizen(Citizen.non);
         memberRepository.save(member2);
 
         //When

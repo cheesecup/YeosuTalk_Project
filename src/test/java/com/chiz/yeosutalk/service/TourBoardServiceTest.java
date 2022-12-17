@@ -31,7 +31,7 @@ class TourBoardServiceTest {
     @DisplayName("관광 게시판 게시글 저장 서비스 테스트")
     void save_tourBoard_service_test() {
         //Given
-        TourBoardFormDto tourBoardFormDto = new TourBoardFormDto("titleA", "contentA", "writerA");
+        TourBoardFormDto tourBoardFormDto = new TourBoardFormDto("titleA", "contentA", "writerA", "gmeekins2@godaddy.com");
 
         //When
         Long tourBoardId = tourBoardService.createTourBoard(tourBoardFormDto);
@@ -39,6 +39,7 @@ class TourBoardServiceTest {
 
         //Then
         assertThat(tourBoardId).isEqualTo(tourBoard.getId());
+        assertThat(tourBoard.getMember().getId()).isEqualTo(3L);
     }
 
     @Test
@@ -61,14 +62,13 @@ class TourBoardServiceTest {
         TourBoardDto tourBoardDto = tourBoardService.postInfo(1L);
 
         //Then
-        assertThat(tourBoardDto.getWriter()).isEqualTo("mlerhinan0");
-        System.out.println(tourBoardDto.getContent());
+        assertThat(tourBoardDto.getId()).isEqualTo(1L);
     }
 
     @Test
     @DisplayName("관광 게시판 게시글 수정 서버스 테스트")
     void updateTourPostTest() {
-        TourBoardFormDto tourBoardFormDto = new TourBoardFormDto("updateTitle", "updateContent", "mlerhinan0");
+        TourBoardFormDto tourBoardFormDto = new TourBoardFormDto("updateTitle", "updateContent", "gmeekins2", "gmeekins2@godaddy.com");
         TourBoard tourBoard = tourBoardRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("해당 게시글을 찾을 수 없습니다."));
 
         //When

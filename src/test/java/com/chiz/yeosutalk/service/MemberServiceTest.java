@@ -5,7 +5,6 @@ import com.chiz.yeosutalk.domain.Member;
 import com.chiz.yeosutalk.dto.MemberDto;
 import com.chiz.yeosutalk.dto.MemberFormDto;
 import com.chiz.yeosutalk.repository.MemberRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +18,28 @@ class MemberServiceTest {
     @Autowired MemberService memberService;
     @Autowired MemberRepository memberRepository;
 
-    @BeforeEach
-    void beforeService() {
-        memberRepository.deleteAll();
-    }
+//    @BeforeAll
+//    void beforeService() {
+//        memberRepository.deleteAll();
+//    }
 
     @Test
     @DisplayName("회원 저장 서비스 테스트")
     void createMemberServiceTest() {
         //Given
+        long before_cnt = memberRepository.count();
         MemberFormDto member = new MemberFormDto();
         member.setAccountId("memberA");
         member.setPwd("1234");
         member.setName("회원A");
-        member.setCitizen(Citizen.CITIZEN);
+        member.setCitizen(Citizen.yes);
 
         //When
         Long memberId = memberService.createMember(member);
+        long after_cnt = memberRepository.count();
 
         //Then
-        assertThat(memberId).isEqualTo(1L);
+        assertThat(after_cnt).isEqualTo(before_cnt + 1L);
     }
 
     @Test
@@ -46,19 +47,19 @@ class MemberServiceTest {
     void duplicateMemberServiceTest() {
         //Given
         MemberFormDto memberFormDto = new MemberFormDto();
-        memberFormDto.setAccountId("memberA");
+        memberFormDto.setAccountId("memberDup");
         memberFormDto.setPwd("1234");
         memberFormDto.setName("회원A");
-        memberFormDto.setCitizen(Citizen.CITIZEN);
+        memberFormDto.setCitizen(Citizen.yes);
 
         Member member = Member.toEntity(memberFormDto);
         memberRepository.save(member);
 
         MemberFormDto memberFormDto2 = new MemberFormDto();
-        memberFormDto2.setAccountId("memberA");
+        memberFormDto2.setAccountId("memberDup");
         memberFormDto2.setPwd("1234");
         memberFormDto2.setName("회원A");
-        memberFormDto2.setCitizen(Citizen.CITIZEN);
+        memberFormDto2.setCitizen(Citizen.yes);
 
         //When
         Long memberId = memberService.createMember(memberFormDto2);
@@ -71,7 +72,7 @@ class MemberServiceTest {
     @DisplayName("로그인 실패 테스트 - 아이디 존재x")
     void loginFailTest_No_Id() {
         //Given
-        Member member = new Member("memberA", "1234", "회원A", Citizen.CITIZEN);
+        Member member = new Member("noId", "1234", "회원A", Citizen.yes);
         memberRepository.save(member);
 
         //When
@@ -85,11 +86,11 @@ class MemberServiceTest {
     @DisplayName("로그인 실패 테스트 - 비밀번호 존재x")
     void loginFailTest_No_Pwd() {
         //Given
-        Member member = new Member("memberA", "1234", "회원A", Citizen.CITIZEN);
+        Member member = new Member("noPwd", "1234", "회원A", Citizen.yes);
         memberRepository.save(member);
 
         //When
-        MemberDto memberDto = memberService.login("memberA", "12345");
+        MemberDto memberDto = memberService.login("noPwd", "12345");
 
         //Then
         assertThat(memberDto).isEqualTo(null);
@@ -99,13 +100,13 @@ class MemberServiceTest {
     @DisplayName("로그인 성공 테스트")
     void loginSuccessTest() {
         //Given
-        Member member = new Member("memberA", "1234", "회원A", Citizen.CITIZEN);
+        Member member = new Member("loginOkTest", "1234", "회원A", Citizen.yes);
         memberRepository.save(member);
 
         //When
-        MemberDto memberDto = memberService.login("memberA", "1234");
+        MemberDto memberDto = memberService.login("loginOkTest", "1234");
 
         //Then
-        assertThat(memberDto.getAccountId()).isEqualTo("memberA");
+        assertThat(memberDto.getAccountId()).isEqualTo("loginOkTest");
     }
 }
