@@ -1,8 +1,10 @@
 package com.chiz.yeosutalk.service;
 
+import com.chiz.yeosutalk.domain.Member;
 import com.chiz.yeosutalk.domain.TourBoard;
 import com.chiz.yeosutalk.dto.TourBoardDto;
 import com.chiz.yeosutalk.dto.TourBoardFormDto;
+import com.chiz.yeosutalk.repository.MemberRepository;
 import com.chiz.yeosutalk.repository.TourBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,15 +18,24 @@ import java.util.List;
 public class TourBoardService {
 
     private final TourBoardRepository tourBoardRepository;
+    private final MemberRepository memberRepository;
 
     @Autowired
-    public TourBoardService(TourBoardRepository tourBoardRepository) {
+    public TourBoardService(TourBoardRepository tourBoardRepository,
+                            MemberRepository memberRepository) {
         this.tourBoardRepository = tourBoardRepository;
+        this.memberRepository = memberRepository;
     }
 
     /* 관광 게시판 게시글 작성 서비스 */
     public Long createTourBoard(TourBoardFormDto tourBoardFormDto) {
+        Member member = memberRepository.findByAccountId(tourBoardFormDto.getAccountId());
+        if (member == null) {
+            return null;
+        }
+
         TourBoard tourBoard = TourBoard.toEntity(tourBoardFormDto);
+        tourBoard.setMember(member);
 
         TourBoard savedTourBoard = tourBoardRepository.save(tourBoard);
 
@@ -33,7 +44,8 @@ public class TourBoardService {
 
     /* 관광 게시판 전체 게시글 조회 */
     public List<TourBoard> tourBoardList() {
-         return tourBoardRepository.findAll();
+        List<TourBoard> tourBoardList = tourBoardRepository.findAll();
+        return tourBoardList;
     }
 
     /* 관광 게시판 게시글 상세내용 조회 서비스 */
@@ -62,6 +74,11 @@ public class TourBoardService {
 
         tourBoardRepository.delete(tourBoard);
         return true;
+    }
+
+    /* 관광 게시판 검색 서비스 */
+    public void searchTourBoardList(String category, String keyword) {
+
     }
 
 }

@@ -5,15 +5,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
-public class TourBoard {
+public class TourBoard extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "tour_board_id")
     private Long id;
 
     private String title;
@@ -24,29 +24,21 @@ public class TourBoard {
     @Column(columnDefinition = "int default 0")
     private int likeCount; // default 0
 
-    private String writer; // user nickname
+    private String writer; // 사용자 닉네임
 
-    private LocalDateTime createdAt;
-
-    private String createdBy;
-
-    private LocalDateTime modifiedAt;
-
-    private String modifiedBy;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     public TourBoard() {
     }
 
-    public TourBoard(Long id, String title, String content, int likeCount, String writer, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+    public TourBoard(Long id, String title, String content, int likeCount, String writer) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.likeCount = likeCount;
         this.writer = writer;
-        this.createdAt = createdAt;
-        this.createdBy = createdBy;
-        this.modifiedAt = modifiedAt;
-        this.modifiedBy = modifiedBy;
     }
 
     public TourBoard(String title, String content, String writer) {

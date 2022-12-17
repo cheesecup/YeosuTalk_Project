@@ -56,4 +56,7 @@ public class TourBoardController {
         boolean result = tourBoardService.deleteTourPost(id);
         return result;
     }
+
+    /* 관광 게시판 게시글 검색 */
+
 }
