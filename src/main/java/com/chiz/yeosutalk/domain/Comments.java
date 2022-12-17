@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class TourBoardComments extends BaseEntity {
+public class Comments extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,16 +25,16 @@ public class TourBoardComments extends BaseEntity {
     @JoinColumn(name = "tour_board_id")
     private TourBoard tourBoard;
 
-    public TourBoardComments() {
+    public Comments() {
     }
 
-    public TourBoardComments(String comment, String commenter) {
+    public Comments(String comment, String commenter) {
         this.comment = comment;
         this.commenter = commenter;
     }
 
-    public static TourBoardComments toEntity(CommentDto commentDto) {
-        TourBoardComments tourBoardComments = new TourBoardComments(commentDto.getComment(), commentDto.getCommenter());
-        return tourBoardComments;
+    public static Comments toEntity(CommentDto commentDto) {
+        Comments comments = new Comments(commentDto.getComment(), commentDto.getCommenter());
+        return comments;
     }
 }
