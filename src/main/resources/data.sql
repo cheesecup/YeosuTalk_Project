@@ -13,8 +13,8 @@ insert into tour_board (tour_board_id, title, content, writer, member_id) values
 insert into tour_board (tour_board_id, title, content, writer, member_id) values (null, 'Eniwetok Airport', 'ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi', 'kiddons', 1);
 insert into tour_board (tour_board_id, title, content, writer, member_id) values (null, 'Peterborough Airport', 'magna bibendum imperdiet nullam orci pede venenatis non sodales sed tincidunt', 'kiddons', 1);
 
-insert into comments (tour_board_comments_id, comment, commenter, tour_board_id, created_at, modified_at) values (null, 'Notechis semmiannulatus', 'gmeekins', 2, '2022-12-17 19:16:08.882000', '2022-12-17 19:16:08.882305');
-insert into comments (tour_board_comments_id, comment, commenter, tour_board_id, created_at, modified_at) values (null, 'Nucifraga columbiana', 'gmeekins', 1, '2022-12-16 19:16:08.882000', '2022-12-16 19:16:08.882305');
-insert into comments (tour_board_comments_id, comment, commenter, tour_board_id, created_at, modified_at) values (null, 'Eudyptula minor', 'gmeekins', 2, '2022-12-13 19:16:08.882000', '2022-12-13 19:16:08.882305');
-insert into comments (tour_board_comments_id, comment, commenter, tour_board_id, created_at, modified_at) values (null, 'Graspus graspus', 'ameffin1', 3, '2022-12-11 19:16:08.882000', '2022-12-11 19:16:08.882305');
-insert into comments (tour_board_comments_id, comment, commenter, tour_board_id, created_at, modified_at) values (null, 'Felis serval', 'gmeekins', 1, '2022-12-12 19:16:08.882000', '2022-12-12 19:16:08.882305');
+insert into tour_comment (tour_comment_id, comment, commenter, tour_board_id, created_at, modified_at) values (null, 'Notechis semmiannulatus', 'gmeekins', 2, '2022-12-17 19:16:08.882000', '2022-12-17 19:16:08.882305');
+insert into tour_comment (tour_comment_id, comment, commenter, tour_board_id, created_at, modified_at) values (null, 'Nucifraga columbiana', 'gmeekins', 1, '2022-12-16 19:16:08.882000', '2022-12-16 19:16:08.882305');
+insert into tour_comment (tour_comment_id, comment, commenter, tour_board_id, created_at, modified_at) values (null, 'Eudyptula minor', 'gmeekins', 2, '2022-12-13 19:16:08.882000', '2022-12-13 19:16:08.882305');
+insert into tour_comment (tour_comment_id, comment, commenter, tour_board_id, created_at, modified_at) values (null, 'Graspus graspus', 'ameffin1', 3, '2022-12-11 19:16:08.882000', '2022-12-11 19:16:08.882305');
+insert into tour_comment (tour_comment_id, comment, commenter, tour_board_id, created_at, modified_at) values (null, 'Felis serval', 'gmeekins', 1, '2022-12-12 19:16:08.882000', '2022-12-12 19:16:08.882305');

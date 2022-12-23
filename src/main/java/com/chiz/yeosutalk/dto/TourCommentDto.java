@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class CommentDto {
+public class TourCommentDto {
 
     private String comment;
 
@@ -17,16 +17,16 @@ public class CommentDto {
 
     private LocalDateTime createdAt;
 
-    public CommentDto() {
+    public TourCommentDto() {
     }
 
-    public CommentDto(String comment, String commenter, Long tourBoardId) {
+    public TourCommentDto(String comment, String commenter, Long tourBoardId) {
         this.comment = comment;
         this.commenter = commenter;
         this.tourBoardId = tourBoardId;
     }
 
-    public CommentDto(String comment, String commenter, Long tourBoardId, LocalDateTime createdAt) {
+    public TourCommentDto(String comment, String commenter, Long tourBoardId, LocalDateTime createdAt) {
         this.comment = comment;
         this.commenter = commenter;
         this.tourBoardId = tourBoardId;

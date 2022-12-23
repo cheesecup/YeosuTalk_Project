@@ -1,6 +1,6 @@
 package com.chiz.yeosutalk.domain;
 
-import com.chiz.yeosutalk.dto.CommentDto;
+import com.chiz.yeosutalk.dto.TourCommentDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,11 +9,11 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class Comments extends BaseEntity {
+public class TourComment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tour_board_comments_id")
+    @Column(name = "tour_comment_id")
     private Long id;
 
     @Lob
@@ -25,16 +25,16 @@ public class Comments extends BaseEntity {
     @JoinColumn(name = "tour_board_id")
     private TourBoard tourBoard;
 
-    public Comments() {
+    public TourComment() {
     }
 
-    public Comments(String comment, String commenter) {
+    public TourComment(String comment, String commenter) {
         this.comment = comment;
         this.commenter = commenter;
     }
 
-    public static Comments toEntity(CommentDto commentDto) {
-        Comments comments = new Comments(commentDto.getComment(), commentDto.getCommenter());
-        return comments;
+    public static TourComment toEntity(TourCommentDto tourCommentDto) {
+        TourComment tourComment = new TourComment(tourCommentDto.getComment(), tourCommentDto.getCommenter());
+        return tourComment;
     }
 }
