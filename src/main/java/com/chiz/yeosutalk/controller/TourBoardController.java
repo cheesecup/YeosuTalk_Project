@@ -1,6 +1,5 @@
 package com.chiz.yeosutalk.controller;
 
-import com.chiz.yeosutalk.domain.TourBoard;
 import com.chiz.yeosutalk.dto.TourBoardDto;
 import com.chiz.yeosutalk.dto.TourBoardFormDto;
 import com.chiz.yeosutalk.service.TourBoardService;
@@ -30,8 +29,8 @@ public class TourBoardController {
 
     /* 관광 게시판 게시글 목록 조회 컨트롤러 */
     @GetMapping("/list")
-    public List<TourBoard> tourBoardList() {
-        List<TourBoard> tourBoardList = tourBoardService.tourBoardList();
+    public List<TourBoardDto> tourBoardList() {
+        List<TourBoardDto> tourBoardList = tourBoardService.tourBoardList();
 
         return tourBoardList;
     }
@@ -58,5 +57,11 @@ public class TourBoardController {
     }
 
     /* 관광 게시판 게시글 검색 */
+    @GetMapping("/search")
+    public List<TourBoardDto> searchList(@RequestParam String category,
+                                      @RequestParam String keyword) {
+        List<TourBoardDto> tourBoardList = tourBoardService.searchTourBoardList(category, keyword);
 
+        return tourBoardList;
+    }
 }

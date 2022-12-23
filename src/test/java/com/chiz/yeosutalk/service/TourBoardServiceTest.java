@@ -49,7 +49,7 @@ class TourBoardServiceTest {
         long count = tourBoardRepository.count();
 
         //When
-        List<TourBoard> tourBoardList = tourBoardService.tourBoardList();
+        List<TourBoardDto> tourBoardList = tourBoardService.tourBoardList();
 
         //Given
         assertThat(tourBoardList.size()).isEqualTo(count);
@@ -76,5 +76,21 @@ class TourBoardServiceTest {
 
         //Then
         assertThat(updateId).isEqualTo(1L);
+    }
+
+    @Test
+    @DisplayName("관광 게시판 작성자 검색 테스트")
+    void searchTourBoardTest() {
+        //Given
+        String category = "writer";
+        String keyword = "kiddons";
+
+        //When
+        List<TourBoardDto> tourBoardList = tourBoardService.searchTourBoardList(category, keyword);
+
+        //Then
+        for (TourBoardDto tourBoard : tourBoardList) {
+            System.out.println(tourBoard.getWriter());
+        }
     }
 }

@@ -1,17 +1,21 @@
 package com.chiz.yeosutalk.service;
 
 import com.chiz.yeosutalk.domain.Member;
+import com.chiz.yeosutalk.domain.QTourBoard;
 import com.chiz.yeosutalk.domain.TourBoard;
 import com.chiz.yeosutalk.dto.TourBoardDto;
 import com.chiz.yeosutalk.dto.TourBoardFormDto;
 import com.chiz.yeosutalk.repository.MemberRepository;
 import com.chiz.yeosutalk.repository.TourBoardRepository;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -19,12 +23,15 @@ public class TourBoardService {
 
     private final TourBoardRepository tourBoardRepository;
     private final MemberRepository memberRepository;
+    private final JPAQueryFactory jpaQueryFactory;
 
     @Autowired
     public TourBoardService(TourBoardRepository tourBoardRepository,
-                            MemberRepository memberRepository) {
+                            MemberRepository memberRepository,
+                            JPAQueryFactory jpaQueryFactory) {
         this.tourBoardRepository = tourBoardRepository;
         this.memberRepository = memberRepository;
+        this.jpaQueryFactory = jpaQueryFactory;
     }
 
     /* 관광 게시판 게시글 작성 서비스 */
@@ -43,9 +50,13 @@ public class TourBoardService {
     }
 
     /* 관광 게시판 전체 게시글 조회 */
-    public List<TourBoard> tourBoardList() {
+    public List<TourBoardDto> tourBoardList() {
         List<TourBoard> tourBoardList = tourBoardRepository.findAll();
-        return tourBoardList;
+        List<TourBoardDto> tourBoardDtoList = tourBoardList.stream()
+                .map(m -> new TourBoardDto(m.getId(), m.getTitle(), m.getContent(), m.getLikeCount(), m.getWriter(), m.getCreatedAt()))
+                .collect(Collectors.toList());
+
+        return tourBoardDtoList;
     }
 
     /* 관광 게시판 게시글 상세내용 조회 서비스 */
@@ -77,8 +88,26 @@ public class TourBoardService {
     }
 
     /* 관광 게시판 검색 서비스 */
-    public void searchTourBoardList(String category, String keyword) {
+    public List<TourBoardDto> searchTourBoardList(String category, String keyword) {
+        BooleanBuilder searchCategory = new BooleanBuilder();
+        QTourBoard qTourBoard = QTourBoard.tourBoard;
+        if (category.equals("title")) {
+            searchCategory.and(qTourBoard.title.like("%" + keyword + "%"));
+        } else if (category.equals("content")) {
+            searchCategory.and(qTourBoard.content.like("%" + keyword + "%"));
+        } else if (category.equals("writer")) {
+            searchCategory.and(qTourBoard.writer.eq(keyword));
+        }
 
+        List<TourBoard> tourBoardList = jpaQueryFactory.selectFrom(qTourBoard)
+                .where(searchCategory)
+                .orderBy(qTourBoard.id.desc())
+                .fetch();
+
+        List<TourBoardDto> searchList = tourBoardList.stream()
+                .map(m -> new TourBoardDto(m.getId(), m.getTitle(), m.getContent(), m.getLikeCount(), m.getWriter(), m.getCreatedAt()))
+                .collect(Collectors.toList());
+        return searchList;
     }
 
 }
