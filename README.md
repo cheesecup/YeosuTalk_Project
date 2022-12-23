@@ -14,4 +14,11 @@
 - Lombok
 - Spring Data JPA
 - JUnit5
+- Querydsl
 
+## 기능 구현 목록
+- 회원가입
+- 로그인
+- 게시글 CRUD
+- 게시글 검색
+- 게시판 댓글 CRUD
