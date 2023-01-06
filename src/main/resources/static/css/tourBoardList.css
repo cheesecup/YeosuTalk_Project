@@ -1,0 +1,84 @@
+body {
+    margin: 0px;
+    font-family: 'Open sans';
+}
+
+button {
+    cursor: pointer;
+}
+
+.btn-table {
+    margin: auto;
+    border-collapse: collapse;
+    width: 1024px;
+}
+
+.btn-table button {
+    float: right;
+    width: 80px;
+    height: 35px;
+}
+
+.tourboard-list-table {
+    margin: auto;
+    border-collapse: collapse;
+    text-align: center;
+    width: 1024px;
+}
+
+#thead-title {
+    width: 650px;
+}
+
+#tbody-title {
+    text-align: left;
+}
+
+#tbody-title a {
+    text-decoration: none;
+    color: black;
+}
+
+.tourboard-list-table td {
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+    border-color: gainsboro;
+    padding: 8px;
+}
+
+.tourboard-list-table thead {
+    background-color: rgb(224, 224, 224);
+    font-weight: bolder;
+    font-size: large;
+}
+
+.post-search {
+    text-align: center;
+}
+
+.category {
+    height: 40px;
+    width: 100px;
+}
+
+.search-input {
+    height: 35px;
+    width: 250px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+button[type=button] {
+    /* display: inline-block;
+    margin-top: 10px;
+    margin-left: 165px; */
+    width: 110px;
+    height: 45px;
+    font-size: 17px;
+    font-weight: 600;
+    vertical-align: middle;
+    border: none;
+    border-radius: 4px;
+    background-color: rgb(52, 152, 219);
+    color: white
+}

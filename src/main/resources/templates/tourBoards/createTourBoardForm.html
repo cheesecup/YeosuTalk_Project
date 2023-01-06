@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>관광게시판 게시글 작성</title>
+
+  <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
+  <div th:replace="fragment/header :: navBar"></div>
 
+  <div class="outer-div">
+    <div class="content-title" style="text-align: center;">
+      <h1 style="margin: 10px auto;">게시글 작성</h1>
+    </div>
+    <div>
+      <span id="board-writer">작성자 : </span>
+      <span name="writer">닉네임</span>
+    </div>
+    <div class="content-table">
+      <table>
+        <tr>
+          <td style="font-weight:bolder">제목</td>
+        </tr>
+        <tr>
+          <td><input type="text" name="title" placeholder="제목을 입력해주세요."></td>
+        </tr>
+        <tr>
+          <td style="font-weight:bolder">내용</td>
+        </tr>
+        <tr>
+          <td><textarea name="content" id="" cols="30" rows="10" placeholder="내용을 입력해주세요."></textarea></td>
+        </tr>
+        <tr>
+          <td><button type="button">글쓰기</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </body>
 </html>
