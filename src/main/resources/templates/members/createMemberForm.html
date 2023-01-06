@@ -5,9 +5,12 @@
   <title>회원가입</title>
 
   <link type="text/css" th:href="@{/css/createMemberForm.css}" rel="stylesheet">
+  <link th:href="@{/css/header.css}" rel="stylesheet">
 </head>
 <body>
 <div class="memberform-container">
+  <div th:replace="fragment/header :: navBar"></div>
+
   <div class="outer-div">
     <div class="content-title" style="margin-left: 895px;">
       <h1>회원가입</h1>
