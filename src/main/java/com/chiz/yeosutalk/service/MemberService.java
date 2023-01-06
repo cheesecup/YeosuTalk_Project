@@ -52,7 +52,9 @@ public class MemberService {
         } else if (!member.getPwd().equals(pwd)) {
             return null;
         } else {
-            return MemberDto.toDto(member);
+            MemberDto memberDto = MemberDto.toDto(member);
+            memberDto.setPwd(null);
+            return memberDto;
         }
     }
 

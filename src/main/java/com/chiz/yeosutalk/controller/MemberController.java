@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
@@ -29,12 +30,14 @@ public class MemberController {
         return "members/createMemberForm";
     }
 
-    /* 회원가입 요청 컨트롤러 */
+    /*
+    * 회원가입 요청 컨트롤러
+    * 회원가입에 성공하면 성공 알림 후 메인페이지로 이동
+    */
     @PostMapping("/create")
-    @ResponseBody
-    public Long createMember(MemberFormDto memberFormDto) {
+    public String createMember(MemberFormDto memberFormDto) {
         Long memberId = memberService.createMember(memberFormDto);
-        return memberId;
+        return "redirect:/";
     }
 
     /* 아이디 중복 확인 컨트롤러 */
@@ -53,15 +56,35 @@ public class MemberController {
         return "members/loginMemberForm";
     }
 
-    /* 로그인 컨트롤러 */
+    /*
+    * 로그인 컨트롤러
+    * 로그인 성공시 로그인 상태 세션에 담아서 메인페이지로 리다이렉트
+    */
     @PostMapping("/login")
     @ResponseBody
-    public MemberDto login(@RequestBody MemberFormDto memberFormDto, HttpSession session) {
+    public String login(MemberFormDto memberFormDto, HttpServletRequest request) {
         MemberDto loginMember = memberService.login(memberFormDto.getAccountId(), memberFormDto.getPwd());
-        loginMember.setId(null);
-        loginMember.setPwd(null);
 
-        session.setAttribute("loginMember", loginMember);
-        return loginMember;
+        if (loginMember == null) {
+            return "fail";
+        }
+
+        HttpSession session = request.getSession();
+        session.setAttribute("loginStatus", true);
+        session.setAttribute("loginInfo", loginMember);
+        return "success";
+    }
+
+    /*
+    * 로그아웃 컨트롤러
+    * 로그아웃 성공시 loginStatus = false
+    * 메인페이지 리다이렉트
+    */
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.removeAttribute("loginStatus");
+
+        return "redirect:/";
     }
 }
