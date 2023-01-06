@@ -3,6 +3,8 @@ package com.chiz.yeosutalk.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -14,11 +16,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * URL: http://localhost:8080/swagger-ui/index.html
+ *  URL: http://localhost:8080/swagger-ui/index.html
  */
 @Configuration
 @EnableWebMvc
-public class SwaggerConfig {
+public class SwaggerConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        /* '/css/**'로 호출하는 자원은 '/static/css/' 폴더 아래에서 찾는다. */
+        registry.addResourceHandler("/css/**")
+                .addResourceLocations("classpath:/static/css/");
+        /* '/js/**'로 호출하는 자원은 '/static/js/' 폴더 아래에서 찾는다. */
+        registry.addResourceHandler("/js/**")
+                .addResourceLocations("classpath:/static/js/");
+        /* '/images/**'로 호출하는 자원은 '/static/images/' 폴더 아래에서 찾는다. */
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations("classpath:/static/images/");
+    }
 
     @Bean
     public Docket swaggerApi() {
