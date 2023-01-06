@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+
+  <link type="text/css" th:href="@{/css/createMemberForm.css}" rel="stylesheet">
+</head>
+<body>
+<div class="memberform-container">
+  <div class="outer-div">
+    <div class="content-title" style="margin-left: 895px;">
+      <h1>회원가입</h1>
+    </div>
+
+    <div class="sign-up-content">
+      <form class="sign-up-form" action="" method="post">
+        <div class="input-content">
+          <label for="sign-up-accountId">아이디 입력</label><br>
+          <input type="text" id="sign-up-accountId"  placeholder="아이디를 입력해주세요." style="width: 290px;">
+          <button type="button">중복확인</button>
+          <br>
+          <span style="color: blue; vertical-align: top;">중복확인 결과 보여주기</span>
+        </div>
+
+        <div class="input-content">
+          <label for="sign-up-pwd">비밀번호 입력</label><br>
+          <input type="password" id="sign-up-pwd" name="pwd" placeholder="비밀번호를 입력해주세요."><br>
+          <label for="sign-up-pwd-check">비밀번호 확인</label><br>
+          <input type="password" id="sign-up-pwd-check" name="pwdCheck" placeholder="비밀번호를 입력해주세요.">
+          <br>
+          <span style="color: blue;">비밀번호가 일치 여부 보여주기</span>
+        </div>
+
+        <div class="input-content">
+          <label for="sign-up-name">이름</label><br>
+          <input type="text" id="sign-up-name" name="name" placeholder="이름을 입력해주세요.">
+        </div>
+
+        <div class="citizen-check">
+          <span>여수 시민이신가요?</span>
+          <label for="sign-up-citizen">예</label>
+          <input type="radio" name="citizen" id="sign-up-citizen" value="CITIZEN"/>
+          <label for="sign-up-non_citizen">아니요</label>
+          <input type="radio" name="citizen" id="sign-up-non_citizen" value="NON_CITIZEN"/>
+        </div>
+
+        <button type="submit">회원가입</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

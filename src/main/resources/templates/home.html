@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>메인 페이지</title>
+</head>
+<body>
+  <h1>메인 페이지</h1>
+  <ul>
+    members directory
+    <li><a th:href="@{/member/create}">회원가입 페이지로 이동</a></li>
+    <li><a th:href="@{/member/login}">로그인 페이지로 이동</a></li>
+  </ul>
+  <ul>
+    tourBoards directory
+    <li><a th:href="@{/tour/list}">관광게시판 페이지로 이동</a></li>
+    <li><a th:href="@{/tour/create}">관광게시판 게시글 생성 페이지로 이동</a></li>
+    <li><a th:href="@{/tour/info/{id}(id=${1})}">id=1 게시글 내용 페이지로 이동</a></li>
+  </ul>
+</body>
+</html>

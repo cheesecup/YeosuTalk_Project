@@ -1,0 +1,90 @@
+body {
+    margin: 0px;
+    font-family: 'Open sans';
+}
+
+.login-container {
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(52, 152, 219);
+    font-weight: bolder;
+}
+
+label {
+    font-weight: 600;
+}
+
+.input-id-pwd label {
+    margin-left: 5%;
+}
+
+.input-id-pwd input {
+    width: 80%;
+    padding: 12px 20px;
+    margin-top: 8px;
+    margin-left: 5%;
+    height: 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    border: none;
+}
+
+.login-btn input{
+    text-align: center;
+    width: 87%;
+    height: 45px;
+    margin-top: 20px;
+    margin-left: 5%;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bolder;
+    border: none;
+    border-radius: 4px;
+    background-color: rgb(52, 152, 219);
+    color: white;
+    cursor: pointer;
+}
+
+.input-content {
+    margin-top: 15px;
+}
+
+.input-content label {
+    margin-left: 5%;
+}
+
+.sign-id-pwd {
+    margin-top: 5px;
+}
+
+.sign-id-pwd span {
+    margin-left: 5%;
+}
+
+.login-form {
+    margin-top: 50px;
+}
+
+.login-page-form {
+    width: 600px;
+    background-color: gainsboro;
+    border-radius: 10px;
+}
+
+.ad-img {
+    width: 600px;
+    margin-left: 400px;
+}
+
+.login-content {
+    width: 1400px;
+    margin-left: 280px;
+}
+
+.login-page-form {
+    margin-left: 160px;
+}
