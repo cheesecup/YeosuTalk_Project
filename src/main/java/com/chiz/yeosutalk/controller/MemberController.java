@@ -1,27 +1,26 @@
 package com.chiz.yeosutalk.controller;
 
-import com.chiz.yeosutalk.dto.MemberDto;
 import com.chiz.yeosutalk.dto.MemberFormDto;
 import com.chiz.yeosutalk.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
 @RequestMapping("/member")
-@CrossOrigin(originPatterns = "http://localhost:8090")
 public class MemberController {
 
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService,
+                            PasswordEncoder passwordEncoder) {
         this.memberService = memberService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /* 회원가입 뷰 컨트롤러 */
@@ -36,7 +35,9 @@ public class MemberController {
     */
     @PostMapping("/create")
     public String createMember(MemberFormDto memberFormDto) {
-        Long memberId = memberService.createMember(memberFormDto);
+        log.info("가입 입력 정보 = (accountId={}, pwd={}, name={}, citizen={})", memberFormDto.getAccountId(), memberFormDto.getPwd(), memberFormDto.getName(), memberFormDto.getCitizen().toString());
+        Long memberId = memberService.createMember(memberFormDto, passwordEncoder);
+
         return "redirect:/";
     }
 
@@ -45,9 +46,7 @@ public class MemberController {
     @ResponseBody
     public boolean duplicateAccountId(@RequestParam String accountId) {
         /* true=중복, false=사용 가능 */
-        boolean result = memberService.duplicateMember(accountId);
-
-        return result;
+        return memberService.duplicateMember(accountId);
     }
 
     /* 로그인 뷰 컨트롤러 */
@@ -56,35 +55,4 @@ public class MemberController {
         return "members/loginMemberForm";
     }
 
-    /*
-    * 로그인 컨트롤러
-    * 로그인 성공시 로그인 상태 세션에 담아서 메인페이지로 리다이렉트
-    */
-    @PostMapping("/login")
-    @ResponseBody
-    public String login(MemberFormDto memberFormDto, HttpServletRequest request) {
-        MemberDto loginMember = memberService.login(memberFormDto.getAccountId(), memberFormDto.getPwd());
-
-        if (loginMember == null) {
-            return "fail";
-        }
-
-        HttpSession session = request.getSession();
-        session.setAttribute("loginStatus", true);
-        session.setAttribute("loginInfo", loginMember);
-        return "success";
-    }
-
-    /*
-    * 로그아웃 컨트롤러
-    * 로그아웃 성공시 loginStatus = false
-    * 메인페이지 리다이렉트
-    */
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        session.removeAttribute("loginStatus");
-
-        return "redirect:/";
-    }
 }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,6 +18,7 @@ class MemberServiceTest {
 
     @Autowired MemberService memberService;
     @Autowired MemberRepository memberRepository;
+    @Autowired PasswordEncoder passwordEncoder;
 
 //    @BeforeAll
 //    void beforeService() {
@@ -35,7 +37,7 @@ class MemberServiceTest {
         member.setCitizen(Citizen.yes);
 
         //When
-        Long memberId = memberService.createMember(member);
+        Long memberId = memberService.createMember(member, passwordEncoder);
         long after_cnt = memberRepository.count();
 
         //Then
@@ -62,7 +64,7 @@ class MemberServiceTest {
         memberFormDto2.setCitizen(Citizen.yes);
 
         //When
-        Long memberId = memberService.createMember(memberFormDto2);
+        Long memberId = memberService.createMember(memberFormDto2, passwordEncoder);
 
         //Then
         assertThat(memberId).isEqualTo(null);

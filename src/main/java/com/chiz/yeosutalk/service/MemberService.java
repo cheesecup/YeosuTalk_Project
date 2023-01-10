@@ -1,13 +1,15 @@
 package com.chiz.yeosutalk.service;
 
 import com.chiz.yeosutalk.domain.Member;
-import com.chiz.yeosutalk.dto.MemberDto;
 import com.chiz.yeosutalk.dto.MemberFormDto;
 import com.chiz.yeosutalk.repository.MemberRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @Transactional
 public class MemberService {
@@ -20,13 +22,15 @@ public class MemberService {
     }
 
     /* 회원 저장 서비스 */
-    public Long createMember(MemberFormDto memberFormDto) {
+    public Long createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
         /* 중복 검사, 중복 시=true 사용 가능=false */
         if(duplicateMember(memberFormDto.getAccountId())) {
             return null;
         }
 
         Member member = Member.toEntity(memberFormDto);
+        String encoderPwd = passwordEncoder.encode(member.getPwd());
+        member.setPwd(encoderPwd);
         Member savedMember = memberRepository.save(member);
 
         return savedMember.getId();
@@ -40,21 +44,6 @@ public class MemberService {
             return false;
         } else {
             return true;
-        }
-    }
-
-    /* 로그인 서비스 */
-    public MemberDto login(String accountId, String pwd) {
-        Member member = memberRepository.findByAccountId(accountId);
-
-        if (member == null) {
-            return null;
-        } else if (!member.getPwd().equals(pwd)) {
-            return null;
-        } else {
-            MemberDto memberDto = MemberDto.toDto(member);
-            memberDto.setPwd(null);
-            return memberDto;
         }
     }
 
