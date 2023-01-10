@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>Header</title>
 
-  <link th:href="@{/css/header.css}" rel="stylesheet">
 </head>
 <body>
-  <div th:fragment="navBar" class="nav-container">
+  <div th:fragment="header" class="nav-container">
     <div class="site-logo">
       <a href="/"><img src="/images/logo(800x800).png" style="width: 150px; height: 150px;"/></a>
     </div>
@@ -19,9 +19,9 @@
         <li class="nav-item"><a href="#">음식점 추천</a></li>
         <li class="nav-item"><a href="#">공지사항</a></li>
         <li class="nav-item"><a href="#">내동네 알리미</a></li>
-        <li class="nav-item" th:if="${session.loginStatus == null}"><a href="/member/login">로그인</a></li>
-        <li class="nav-item" th:if="${session.loginStatus == true}"><a href="/member/logout">로그아웃</a></li>
-        <li class="nav-item" th:if="${session.loginStatus == null}"><a href="/member/create">회원가입</a></li>
+        <li class="nav-item" sec:authorize="isAnonymous()"><a href="/member/login">로그인</a></li>
+        <li class="nav-item" sec:authorize="isAuthenticated()"><a href="/member/logout">로그아웃</a></li>
+        <li class="nav-item" sec:authorize="isAnonymous()"><a href="/member/create">회원가입</a></li>
       </ul>
     </nav>
   </div>

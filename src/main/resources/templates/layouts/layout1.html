@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Layout Page</title>
+
+  <!-- Common CSS -->
+  <link th:href="@{/css/header.css}" rel="stylesheet">
+
+  <!-- Common JS, jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+  <!-- Individual CSS, Script -->
+  <th:block layout:fragment="script"></th:block>
+  <th:block layout:fragment="css"></th:block>
 </head>
 <body>
+
+  <!-- Header -->
+  <div th:replace="fragment/header :: header"></div>
+
+  <!-- Content -->
+  <div layout:fragment="content"></div>
+
+  <!-- Footer -->
 
 </body>
 </html>

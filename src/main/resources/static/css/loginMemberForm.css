@@ -33,7 +33,7 @@ label {
     border: none;
 }
 
-.login-btn input{
+.login-btn button {
     text-align: center;
     width: 87%;
     height: 45px;
