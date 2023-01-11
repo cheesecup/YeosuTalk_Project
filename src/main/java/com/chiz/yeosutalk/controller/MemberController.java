@@ -42,9 +42,10 @@ public class MemberController {
     }
 
     /* 아이디 중복 확인 컨트롤러 */
-    @PostMapping("/id-check")
+    @GetMapping("/id-check")
     @ResponseBody
     public boolean duplicateAccountId(@RequestParam String accountId) {
+        log.info("체크할 아이디 = {}", accountId);
         /* true=중복, false=사용 가능 */
         return memberService.duplicateMember(accountId);
     }
