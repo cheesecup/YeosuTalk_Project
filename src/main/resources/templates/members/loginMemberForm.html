@@ -3,47 +3,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 <head>
-  <meta charset="UTF-8">
   <title>로그인</title>
-
-  <th:block layout:fragment="css">
-    <link type="text/css" th:href="@{/css/loginMemberForm.css(time=${#calendars.format(#calendars.createNow(), 'HH:mm:ss')})}" rel="stylesheet">
-  </th:block>
-
-  <th:block layout:fragment="script">
-    <script th:inline="javascript">
-        function loginBtn() {
-            let accountId = $('#login-accountId').val();
-            let pwd = $('#login-pwd').val();
-            let loginData = {
-                "accountId" : accountId,
-                "pwd" : pwd
-            };
-
-            let jsonData = JSON.stringify(loginData);
-
-            $.ajax({
-                url: '/member/login',
-                type: 'post',
-                contentType: 'application/json',
-                datatype: 'json',
-                data: jsonData,
-                success: function (data) {
-                    if (data === "success") {
-                        alert('로그인 성공!');
-                        location.href = "http://localhost:8080/";
-                    } else {
-                        alert('입력한 정보가 올바르지 않습니다.');
-                    }
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        }
-    </script>
-  </th:block>
 </head>
+
+<th:block layout:fragment="css">
+  <link type="text/css" th:href="@{/css/loginMemberForm.css(time=${#calendars.format(#calendars.createNow(), 'HH:mm:ss')})}" rel="stylesheet">
+</th:block>
+
 <body>
   <div layout:fragment="content">
     <div class="login-container">

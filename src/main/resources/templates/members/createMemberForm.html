@@ -2,15 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
+
 <head>
-  <meta charset="UTF-8">
   <title>회원가입</title>
+</head>
 
   <th:block layout:fragment="css">
     <link type="text/css" th:href="@{/css/createMemberForm.css}" rel="stylesheet">
   </th:block>
 
-</head>
+  <th:block layout:fragment="script">
+    <script th:inline="javascript">
+      function duplicateBtn() {
+          let accountId = $('#sign-up-accountId').val();
+
+          $.ajax({
+              url: '/member/id-check',
+              type: 'get',
+              data: {
+                  "accountId" : accountId
+              },
+              success: function (data) {
+                  if (data === true) {
+                      alert('사용 할 수 없는 아이디입니다.');
+                  } else {
+                      alert('사용가능한 아이디입니다.')
+                  }
+              },
+              error : function (error) {
+                  console.log(error);
+              }
+          })
+
+      }
+    </script>
+  </th:block>
 <body>
   <div layout:fragment="content">
     <div class="memberform-container">
@@ -24,7 +50,7 @@
             <div class="input-content">
               <label for="sign-up-accountId">아이디 입력</label><br>
               <input type="text" name="accountId" id="sign-up-accountId"  placeholder="아이디를 입력해주세요." style="width: 290px;">
-              <button type="button">중복확인</button>
+              <button id="duplicate-btn" type="button" onclick="duplicateBtn()">중복확인</button>
               <br>
               <span style="color: blue; vertical-align: top;">중복확인 결과 보여주기</span>
             </div>
