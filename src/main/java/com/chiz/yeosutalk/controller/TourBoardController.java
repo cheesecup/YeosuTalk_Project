@@ -3,13 +3,19 @@ package com.chiz.yeosutalk.controller;
 import com.chiz.yeosutalk.dto.TourBoardDto;
 import com.chiz.yeosutalk.dto.TourBoardFormDto;
 import com.chiz.yeosutalk.service.TourBoardService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+@Slf4j
 @Controller
 @RequestMapping("/tour")
 public class TourBoardController {
@@ -38,10 +44,21 @@ public class TourBoardController {
 
     /* 관광 게시판 게시글 뷰 컨트롤러 */
     @GetMapping("/list")
-    public String tourBoardList(Model model) {
-        List<TourBoardDto> tourBoardList = tourBoardService.tourBoardList();
-
+    public String tourBoardList(@RequestParam("page") Optional<Integer> page,
+                                Model model) {
+        Page<TourBoardDto> tourBoardList = tourBoardService.tourBoardList(page);
         model.addAttribute("boards", tourBoardList);
+
+        String currentPage = String.valueOf(page.orElse(1));
+        model.addAttribute("currentPage", currentPage);
+
+        int totalPages = tourBoardList.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
 
         return "tourBoards/tourBoardList";
     }

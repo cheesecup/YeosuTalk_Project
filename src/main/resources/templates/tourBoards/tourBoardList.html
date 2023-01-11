@@ -3,19 +3,20 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 <head>
-  <meta charset="UTF-8">
   <title>관광게시판</title>
-
-  <th:block layout:fragment="css">
-    <link type="text/css" th:href="@{/css/tourBoardList.css}" rel="stylesheet">
-  </th:block>
 </head>
+
+<th:block layout:fragment="css">
+  <link type="text/css" th:href="@{/css/tourBoardList.css(time=${#calendars.format(#calendars.createNow(), 'HH:mm:ss')})}" rel="stylesheet">
+</th:block>
+
 <body>
   <div layout:fragment="content">
     <div class="outer-div">
       <div class="content-title" style="text-align: center;">
         <h1 style="margin: 10px auto;">관광게시판</h1>
       </div>
+
       <div class="content-table">
         <table class="btn-table">
           <tr>
@@ -24,6 +25,7 @@
             </td>
           </tr>
         </table>
+
         <table class="tourboard-list-table">
           <thead>
           <tr>
@@ -35,29 +37,27 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="board : ${boards}">
+          <tr th:each="board : ${boards.content}">
             <td th:text="${board.id}">1</td>
             <td id="tbody-title">
-              <a th:text="${board.title}" th:href="@{/tour/info/{id}(id=${board.id})}">여수해양공원</a>
+              <a th:text="${board.title}" th:href="@{/tour/info/{id}(id=${board.id})}">게시글 제목</a>
             </td>
-            <td th:text="${board.writer}">여수사랑</td>
-            <td th:text="${board.likeCount}">0</td>
-            <td th:text="${#temporals.format(board.createdAt, 'yyyy-MM-dd')}">2023.01.01</td>
+            <td th:text="${board.writer}">작성자 닉네임</td>
+            <td th:text="${board.likeCount}">추천수</td>
+            <td th:text="${#temporals.format(board.createdAt, 'yyyy-MM-dd')}">작성일자</td>
           </tr>
           </tbody>
         </table>
       </div>
 
-      <div class="page-list">
-        <nav>
-          <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-          </ul>
-        </nav>
+      <div class="pagination">
+        <a th:href="@{/tour/list(page=1)}">&laquo;</a>
+        <a th:each="pageNumber : ${#numbers.sequence(1, pageNumbers.size() + 1)}"
+           th:href="@{/tour/list(page=${pageNumber})}"
+           th:text="${pageNumber}"
+           th:if="${boards.totalPages > 0}"
+           th:classappend="${#strings.equals(currentPage, pageNumber)} ? 'active' : 'non-acitve'">pageNumber</a>
+        <a th:href="@{/tour/list(page=${boards.getTotalPages()} + 1)}">&raquo;</a>
       </div>
 
       <div class="post-search">

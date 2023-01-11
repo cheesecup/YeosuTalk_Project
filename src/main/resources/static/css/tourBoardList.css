@@ -82,3 +82,27 @@ button[type=button] {
     background-color: rgb(52, 152, 219);
     color: white
 }
+
+.pagination {
+    /*display: inline-block;*/
+    text-align: center;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.pagination a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.pagination a.active {
+    background-color: rgb(52, 152, 219);
+    color: white;
+    border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+}

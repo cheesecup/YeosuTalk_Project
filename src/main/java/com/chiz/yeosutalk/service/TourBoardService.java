@@ -10,11 +10,13 @@ import com.chiz.yeosutalk.repository.TourBoardRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,13 +52,13 @@ public class TourBoardService {
     }
 
     /* 관광 게시판 전체 게시글 조회 */
-    public List<TourBoardDto> tourBoardList() {
-        List<TourBoard> tourBoardList = tourBoardRepository.findAll();
-        List<TourBoardDto> tourBoardDtoList = tourBoardList.stream()
-                .map(m -> new TourBoardDto(m.getId(), m.getTitle(), m.getContent(), m.getLikeCount(), m.getWriter(), m.getCreatedAt()))
-                .collect(Collectors.toList());
+    public Page<TourBoardDto> tourBoardList(Optional<Integer> page) {
+        int currentPage = page.orElse(1);
+        Pageable pageable = PageRequest.of(currentPage - 1, 5, Sort.by(Sort.Direction.DESC, "id"));
 
-        return tourBoardDtoList;
+        return new PageImpl<>(tourBoardRepository.findAll(pageable).stream()
+                .map(m -> new TourBoardDto(m.getId(), m.getTitle(), m.getContent(), m.getLikeCount(), m.getWriter(), m.getCreatedAt()))
+                .collect(Collectors.toList()));
     }
 
     /* 관광 게시판 게시글 상세내용 조회 서비스 */
