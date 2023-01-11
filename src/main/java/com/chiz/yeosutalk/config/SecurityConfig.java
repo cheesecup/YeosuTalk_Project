@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/");
 
         http.authorizeRequests()
-                .antMatchers("/", "/member/**", "/images/**").permitAll()
+                .antMatchers("/", "/member/**", "/images/**", "/tour/list", "/tour/info/**").permitAll()
                 .anyRequest().authenticated();
 
         return http.build();
