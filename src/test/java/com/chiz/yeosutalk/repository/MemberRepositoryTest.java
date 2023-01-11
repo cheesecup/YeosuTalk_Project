@@ -6,12 +6,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@Transactional
 class MemberRepositoryTest {
 
     @Autowired
@@ -72,7 +74,7 @@ class MemberRepositoryTest {
     void findMemberByName() {
         //Given
         Member member1 = new Member();
-        member1.setAccountId("member1");
+        member1.setAccountId("nickname1");
         member1.setPwd("1234");
         member1.setName("회원1");
         member1.setNickname("닉네임1");
@@ -80,10 +82,10 @@ class MemberRepositoryTest {
         memberRepository.save(member1);
 
         Member member2 = new Member();
-        member2.setAccountId("member2");
+        member2.setAccountId("nickname2");
         member2.setPwd("1234");
         member2.setName("회원2");
-        member1.setNickname("닉네임1");
+        member2.setNickname("닉네임2");
         member2.setCitizen(Citizen.non);
         memberRepository.save(member2);
 

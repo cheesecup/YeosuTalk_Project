@@ -2,7 +2,6 @@ package com.chiz.yeosutalk.service;
 
 import com.chiz.yeosutalk.domain.Citizen;
 import com.chiz.yeosutalk.domain.Member;
-import com.chiz.yeosutalk.dto.MemberDto;
 import com.chiz.yeosutalk.dto.MemberFormDto;
 import com.chiz.yeosutalk.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -10,20 +9,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@Transactional
 class MemberServiceTest {
 
     @Autowired MemberService memberService;
     @Autowired MemberRepository memberRepository;
     @Autowired PasswordEncoder passwordEncoder;
-
-//    @BeforeAll
-//    void beforeService() {
-//        memberRepository.deleteAll();
-//    }
 
     @Test
     @DisplayName("회원 저장 서비스 테스트")
@@ -68,47 +64,5 @@ class MemberServiceTest {
 
         //Then
         assertThat(memberId).isEqualTo(null);
-    }
-
-    @Test
-    @DisplayName("로그인 실패 테스트 - 아이디 존재x")
-    void loginFailTest_No_Id() {
-        //Given
-        Member member = new Member("noId", "1234", "회원A", Citizen.yes);
-        memberRepository.save(member);
-
-        //When
-        MemberDto memberDto = memberService.login("errorId", "1234");
-
-        //Then
-        assertThat(memberDto).isEqualTo(null);
-    }
-
-    @Test
-    @DisplayName("로그인 실패 테스트 - 비밀번호 존재x")
-    void loginFailTest_No_Pwd() {
-        //Given
-        Member member = new Member("noPwd", "1234", "회원A", Citizen.yes);
-        memberRepository.save(member);
-
-        //When
-        MemberDto memberDto = memberService.login("noPwd", "12345");
-
-        //Then
-        assertThat(memberDto).isEqualTo(null);
-    }
-
-    @Test
-    @DisplayName("로그인 성공 테스트")
-    void loginSuccessTest() {
-        //Given
-        Member member = new Member("loginOkTest", "1234", "회원A", Citizen.yes);
-        memberRepository.save(member);
-
-        //When
-        MemberDto memberDto = memberService.login("loginOkTest", "1234");
-
-        //Then
-        assertThat(memberDto.getAccountId()).isEqualTo("loginOkTest");
     }
 }

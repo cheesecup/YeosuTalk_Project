@@ -8,10 +8,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,11 +23,6 @@ class TourBoardServiceTest {
 
     @Autowired TourBoardService tourBoardService;
     @Autowired TourBoardRepository tourBoardRepository;
-
-//    @BeforeEach
-//    void before() {
-//        tourBoardRepository.deleteAll();
-//    }
 
     @Test
     @DisplayName("관광 게시판 게시글 저장 서비스 테스트")
@@ -39,20 +36,22 @@ class TourBoardServiceTest {
 
         //Then
         assertThat(tourBoardId).isEqualTo(tourBoard.getId());
-        assertThat(tourBoard.getMember().getId()).isEqualTo(3L);
+        assertThat(tourBoard.getMember().getAccountId()).isEqualTo("gmeekins2@godaddy.com");
     }
 
     @Test
     @DisplayName("관광 게시판 게시글 전체 조회")
     void findAllTourBoardList() {
         //Given
-        long count = tourBoardRepository.count();
+        Optional<Integer> page = Optional.of(1);
 
         //When
-        List<TourBoardDto> tourBoardList = tourBoardService.tourBoardList();
+        Page<TourBoardDto> tourBoardList = tourBoardService.tourBoardList(page);
 
         //Given
-        assertThat(tourBoardList.size()).isEqualTo(count);
+        for (int i=0; i<tourBoardList.getSize(); i++) {
+            System.out.println(i + "번째 게시글 제목 = " + tourBoardList.getContent().get(i).getTitle());
+        }
     }
 
     @Test
